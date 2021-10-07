@@ -27,7 +27,6 @@ _config_dict = dict(
     SOLVER=dict(
         LR_SCHEDULER=dict(
             MAX_EPOCH=30,
-            #MAX_ITER=20,
             WARMUP_ITERS=0,
         ),
         IMS_PER_BATCH=128,
@@ -155,3 +154,11 @@ elif model == 'reproduct':
 else:
     print ("Train Mode")
     pass
+
+import logging
+
+class NoParsingFilter(logging.Filter):
+    def filter(self, record):
+        return False
+logging.getLogger("cvpods").addFilter(NoParsingFilter())
+#logging.getLogger("cvpods").addFilter(NoParsingFilter())

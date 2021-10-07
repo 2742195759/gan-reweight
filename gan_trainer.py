@@ -209,8 +209,9 @@ class BaselineTrainer(DefaultRunner): #{{{
         self.checkpointer.load(global_cfg.GAN.BACKBONE_BEST_PATH)
 
     @classmethod
-    def build_evaluator(cls, cfg, dataset_name, meta, output_folder=None):
-        evaluator_type = meta.evaluator_type
+    def build_evaluator(cls, cfg, dataset_name, dataset, output_folder=None, dump=False):
+        meta = dataset.meta
+        evaluator_type = dataset.meta.evaluator_type
         if output_folder is None:
             output_folder = os.path.join(cfg.OUTPUT_DIR, "inference")
         if evaluator_type == "classification":
@@ -391,7 +392,7 @@ class GANTrainer(RunnerBase):  #{{{
             self.gen_trainer.train()
 #}}}
     def start(self):#{{{
-        self.train(self.start_iter, self.max_iter, 1)
+        self.train(self.start_iter, 1, self.max_iter)
         #self.baseline_task.train()#}}}
 #}}}
 
